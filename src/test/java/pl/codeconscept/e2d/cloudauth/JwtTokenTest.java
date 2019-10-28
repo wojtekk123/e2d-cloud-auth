@@ -1,29 +1,16 @@
 package pl.codeconscept.e2d.cloudauth;
 
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.security.core.Authentication;
-import pl.codeconcept.e2d.database.entity.UserActivity;
-import pl.codeconcept.e2d.database.entity.Users;
-import pl.codeconcept.e2d.database.repository.UserActivityRepo;
+import pl.codeconcept.e2d.database.entity.RoleType;
+import pl.codeconcept.e2d.database.entity.User;
 import pl.codeconcept.e2d.service.jwt.JwtToken;
-import pl.codeconcept.e2d.service.user.UserActivityService;
-import pl.codeconcept.e2d.service.user.UserSrvice;
-
-import javax.swing.*;
 
 public class JwtTokenTest {
 
-    Users prinicple = new Users ("jacek","1234","ADMIN_ROLE");
+    User prinicple = new User("jacek","1234", RoleType.ROLE_ADMIN);
 
     @Test
     public void schouldCheckToken () {

@@ -31,16 +31,7 @@ import java.security.MessageDigest;
 public class WebSecureConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
-    UserRepo userRepo;
-
-    @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    JwtToken jwtToken;
+    private JwtToken jwtToken;
 
     @Bean
     @Override
@@ -49,16 +40,8 @@ public class WebSecureConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder () {
-        return  new Md5PasswordEncoder();
-    }
-
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.userDetailsService(userDetailsService)
-       .passwordEncoder(passwordEncoder());
+    PasswordEncoder passwordEncoder() {
+        return new Md5PasswordEncoder();
     }
 
     @Override
@@ -66,18 +49,14 @@ public class WebSecureConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/signin").permitAll()
                 .antMatchers("/signup").hasRole("ADMIN")
-                .antMatchers("/logout").permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .addFilter(jwtAuthFilter(authenticationManagerBean(), jwtToken))
                 .csrf().disable();
-
     }
 
     @Bean
     public JwtAuthFilter jwtAuthFilter(AuthenticationManager authenticationManager, JwtToken jwtToken) {
         return new JwtAuthFilter(authenticationManager, jwtToken);
     }
-
-
-
 }

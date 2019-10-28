@@ -17,7 +17,6 @@ public class Md5PasswordEncoder implements PasswordEncoder {
         return getMd5(charSequence.toString()).equals(s);
     }
 
-
     public static String getMd5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

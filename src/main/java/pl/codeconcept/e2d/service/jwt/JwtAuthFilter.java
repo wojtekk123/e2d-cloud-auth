@@ -28,6 +28,7 @@ public class JwtAuthFilter extends BasicAuthenticationFilter {
     private final JwtToken jwtToken;
 
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthFilter.class);
+
     public JwtAuthFilter(AuthenticationManager authenticationManager, JwtToken jwtToken) {
         super(authenticationManager);
         this.jwtToken = jwtToken;
@@ -39,24 +40,18 @@ public class JwtAuthFilter extends BasicAuthenticationFilter {
 
         try {
             String jwt = getJwt(httpServletRequest);
+
             if (jwt != null) {
 
                 String username = jwtToken.getClaims(jwt).getSubject();
                 String role = jwtToken.getClaims(jwt).get("role").toString();
                 Set<SimpleGrantedAuthority> grantedAuthority = Collections.singleton(new SimpleGrantedAuthority(role));
-
-                //String username = jwtToken.getUserFormToken(jwt);
-               // UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null,grantedAuthority);
-     //           authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, grantedAuthority);
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-
-
             }
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
 
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
 
         } catch (MalformedJwtException e) {
             logger.error("Invalid token");
@@ -73,12 +68,13 @@ public class JwtAuthFilter extends BasicAuthenticationFilter {
     private String getJwt(HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
+
         if (token != null && token.startsWith("Bearer ")) {
             return token.replace("Bearer ", "");
         }
+
         return null;
     }
-
 
 
 }

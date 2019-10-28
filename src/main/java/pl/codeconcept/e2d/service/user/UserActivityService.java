@@ -1,27 +1,23 @@
 package pl.codeconcept.e2d.service.user;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.codeconcept.e2d.database.entity.ActionType;
 import pl.codeconcept.e2d.database.entity.UserActivity;
-import pl.codeconcept.e2d.database.entity.Users;
+import pl.codeconcept.e2d.database.entity.User;
 import pl.codeconcept.e2d.database.repository.UserActivityRepo;
-import pl.codeconcept.e2d.database.repository.UserRepo;
-
-import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class UserActivityService {
-    @Autowired
-    private UserActivityRepo userActivityRepo;
-    @Autowired
-    private UserSrvice userSrvice;
 
+    private final UserActivityRepo userActivityRepo;
+    private final UserSrvice userSrvice;
 
-    public UserActivity saveActivity(String users,  String acttion) {
+    public UserActivity saveActivity(String users, ActionType actionType) {
 
-        Users tempUsers = userSrvice.findUserByUsername(users);
-        return userActivityRepo.save(new UserActivity(tempUsers.getId(),  acttion));
-
+        User tempUsers = userSrvice.findUserByUsername(users);
+        return userActivityRepo.save(new UserActivity(tempUsers.getId(), actionType));
     }
-
 }

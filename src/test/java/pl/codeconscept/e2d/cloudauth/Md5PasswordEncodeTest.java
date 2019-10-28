@@ -1,12 +1,9 @@
 package pl.codeconscept.e2d.cloudauth;
 
 
-import io.jsonwebtoken.ExpiredJwtException;
 import org.junit.Assert;
 import org.junit.Test;
 import pl.codeconcept.e2d.config.Md5PasswordEncoder;
-import pl.codeconcept.e2d.database.entity.Users;
-import pl.codeconcept.e2d.service.jwt.JwtToken;
 
 public class Md5PasswordEncodeTest {
 
