@@ -1,52 +1,40 @@
 package pl.codeconcept.e2d.database.entity;
 
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
-
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import pl.codeconcept.e2d.database.entity.enums.RoleType;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
+@Data
 @Entity
-@Table(name = "user")
-@Getter
-@Setter
-@NoArgsConstructor
-public class User implements UserDetails {
+@Table(name = "user_registration")
+public class UserRegistration implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "user_name")
     private String username;
+
+    @Column(name = "password")
     private String password;
+
     @Enumerated(EnumType.STRING)
     private RoleType role;
 
-    public User(String username, String password, RoleType role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
+    @OneToOne (cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "create_date")
+    private UserActivity userActivity;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(role.toString()));
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
     }
 
     @Override

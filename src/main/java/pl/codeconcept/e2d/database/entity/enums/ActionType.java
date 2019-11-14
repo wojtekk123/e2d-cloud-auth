@@ -1,4 +1,4 @@
-package pl.codeconcept.e2d.database.entity;
+package pl.codeconcept.e2d.database.entity.enums;
 
 public enum ActionType {
 

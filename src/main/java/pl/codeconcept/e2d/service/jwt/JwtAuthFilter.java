@@ -60,6 +60,7 @@ public class JwtAuthFilter extends BasicAuthenticationFilter {
         } catch (UsernameNotFoundException e) {
             logger.error("User not found");
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error("Some other exception in JWT parsing");
         }
 

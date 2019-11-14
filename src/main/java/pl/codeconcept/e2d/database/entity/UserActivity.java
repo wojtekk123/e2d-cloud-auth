@@ -1,30 +1,27 @@
 package pl.codeconcept.e2d.database.entity;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
+import pl.codeconcept.e2d.database.entity.enums.ActionType;
 
 import javax.persistence.*;
+import java.util.Date;
 
+@Data
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-
+@Table(name = "user_activity")
 public class UserActivity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "id_users")
-    private Long userId;
+
     @Column(name = "action_type")
     @Enumerated(EnumType.STRING)
     private ActionType actionType;
 
-    public UserActivity(Long userId, ActionType actionType) {
-        this.userId = userId;
-        this.actionType = actionType;
-    }
+    @Column(name = "action_date")
+    private Date date;
+
 }
 

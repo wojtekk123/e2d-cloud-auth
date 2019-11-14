@@ -3,7 +3,7 @@ package pl.codeconcept.e2d.dto;
 import lombok.Data;
 
 @Data
-public class RegistrationDto {
+public class UserDto {
 
     private String username;
     private String password;

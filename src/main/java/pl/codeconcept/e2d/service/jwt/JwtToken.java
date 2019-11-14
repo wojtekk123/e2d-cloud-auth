@@ -4,7 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
-import pl.codeconcept.e2d.database.entity.User;
+import pl.codeconcept.e2d.database.entity.UserRegistration;
 
 import java.util.Date;
 
@@ -12,9 +12,9 @@ import java.util.Date;
 public class JwtToken {
 
     private static final String jwtSecret = "1234";
-    private static final int jwtExpiration = 30000;
+    private static final int jwtExpiration = 60000;
 
-    public String generateJwtToken(User principal) {
+    public String generateJwtToken(UserRegistration principal) {
 
         return Jwts.builder()
                 .setSubject(principal.getUsername())

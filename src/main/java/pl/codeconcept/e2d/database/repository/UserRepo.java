@@ -1,14 +1,14 @@
 package pl.codeconcept.e2d.database.repository;
 
-import pl.codeconcept.e2d.database.entity.User;
+import pl.codeconcept.e2d.database.entity.UserRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface
-UserRepo extends JpaRepository<User, Long> {
+UserRepo extends JpaRepository<UserRegistration, Long> {
 
-    User findByUsername(String username);
+    UserRegistration findByUsername(String username);
 
-    boolean existsByUsername(String username);
+
 }
