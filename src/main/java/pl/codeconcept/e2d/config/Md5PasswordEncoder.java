@@ -28,9 +28,7 @@ public class Md5PasswordEncoder implements PasswordEncoder {
             }
 
             return hashtext;
-        }
-
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             System.out.println("Exception thrown"
                     + " for incorrect algorithm: " + e);
             return null;

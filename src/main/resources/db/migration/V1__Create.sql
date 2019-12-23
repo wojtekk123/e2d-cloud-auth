@@ -7,7 +7,6 @@ CREATE TABLE user_activity
     PRIMARY KEY (id)
 );
 
-
 CREATE TABLE user_registration
 (
     id          SERIAL,

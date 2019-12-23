@@ -22,6 +22,5 @@ public class UserActivity {
 
     @Column(name = "action_date")
     private Date date;
-
 }
 

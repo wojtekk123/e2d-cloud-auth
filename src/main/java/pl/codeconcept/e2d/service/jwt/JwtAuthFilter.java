@@ -1,16 +1,14 @@
 package pl.codeconcept.e2d.service.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -34,7 +32,6 @@ public class JwtAuthFilter extends BasicAuthenticationFilter {
         this.jwtToken = jwtToken;
     }
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
@@ -56,6 +53,7 @@ public class JwtAuthFilter extends BasicAuthenticationFilter {
         } catch (MalformedJwtException e) {
             logger.error("Invalid token");
         } catch (ExpiredJwtException e) {
+            httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
             logger.error("Token expired ");
         } catch (UsernameNotFoundException e) {
             logger.error("User not found");
@@ -63,11 +61,9 @@ public class JwtAuthFilter extends BasicAuthenticationFilter {
             e.printStackTrace();
             logger.error("Some other exception in JWT parsing");
         }
-
     }
 
     private String getJwt(HttpServletRequest httpServletRequest) {
-
         String token = httpServletRequest.getHeader("Authorization");
 
         if (token != null && token.startsWith("Bearer ")) {

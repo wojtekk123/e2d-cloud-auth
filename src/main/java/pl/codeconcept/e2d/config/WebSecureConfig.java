@@ -29,23 +29,25 @@ public class WebSecureConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new Md5PasswordEncoder();
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/signin").permitAll()
-                .antMatchers("/signup").hasRole("ADMIN")
-                .anyRequest().permitAll()
-                .and()
-                .addFilter(jwtAuthFilter(authenticationManagerBean(), jwtToken))
-                .csrf().disable();
     }
 
     @Bean
     public JwtAuthFilter jwtAuthFilter(AuthenticationManager authenticationManager, JwtToken jwtToken) {
         return new JwtAuthFilter(authenticationManager, jwtToken);
     }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/signin").permitAll()
+                .antMatchers("/signup").hasAnyRole("ADMIN","SCHOOL")
+                .anyRequest().denyAll()
+                .and()
+                .addFilter(jwtAuthFilter(authenticationManagerBean(), jwtToken))
+                .csrf().disable();
+    }
+
+
 }

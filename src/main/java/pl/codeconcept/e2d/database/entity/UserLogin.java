@@ -16,8 +16,7 @@ public class UserLogin {
     @Column(name = "user_name")
     private String username;
 
-    @OneToOne (cascade=CascadeType.PERSIST)
+    @OneToOne(cascade= CascadeType.PERSIST)
     @JoinColumn(name = "action_date")
     private UserActivity userActivity;
-
 }
