@@ -1,6 +1,7 @@
 package pl.codeconcept.e2d.service.user;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,7 @@ import pl.codeconcept.e2d.service.mapper.RegistrationMapper;
 
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class UserService {
 
@@ -51,6 +53,7 @@ public class UserService {
             return jwtToken.generateJwtToken(userRegistration);
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("Authentication problem");
             return "Authentication problem";
         }
     }

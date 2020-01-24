@@ -20,18 +20,18 @@ management:
   context-path: /admin
 
 eureka:
-  password: password
-  instance:
-    hostname: ${HOST:localhost}
-    registryFetchIntervalSeconds: 3
-    leaseRenewalIntervalInSeconds: 5
-    statusPageUrlPath: ${management.context-path}/info
-    healthCheckUrlPath: ${management.context-path}/health
-    metadataMap:
-      instanceId: ${spring.application.name}
-      management:
-        context-path: ${management.context-path}
+#  password: password
+#  instance:
+#    hostname: ${HOST:cloudauth}
+#    registryFetchIntervalSeconds: 3
+#    leaseRenewalIntervalInSeconds: 5
+#    statusPageUrlPath: ${management.context-path}/info
+#    healthCheckUrlPath: ${management.context-path}/health
+#    metadataMap:
+#      instanceId: ${spring.application.name}
+#      management:
+#        context-path: ${management.context-path}
   client:
     initialInstanceInfoReplicationIntervalSeconds: 5
     serviceUrl:
-      defaultZone: http://${DISCOVERY_HOST:${HOST:localhost}}:${DISCOVERY_PORT:8761}/eureka/
+      defaultZone: http://${DISCOVERY_HOST:${HOST:clouddiscovery}}:${DISCOVERY_PORT:8761}/eureka/

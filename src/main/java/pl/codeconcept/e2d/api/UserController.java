@@ -20,11 +20,6 @@ public class UserController {
         return userService.saveUser(userDto);
     }
 
-//    @PostMapping("/save")
-//    public ResponseEntity<BackDto> save(@RequestBody UserDto userDto) {
-//        return userService.saveUser(userDto);
-//    }
-
     @PostMapping("/signin")
     public ResponseEntity<String> signIn(@RequestBody LoginDto loginDto) {
         return new ResponseEntity<>(userService.loginUser(loginDto), HttpStatus.OK);
