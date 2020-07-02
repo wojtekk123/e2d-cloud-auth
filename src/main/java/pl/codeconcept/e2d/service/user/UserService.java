@@ -16,10 +16,13 @@ import pl.codeconcept.e2d.database.repository.LoginRepo;
 import pl.codeconcept.e2d.database.repository.UserRepo;
 import pl.codeconcept.e2d.dto.LoginDto;
 import pl.codeconcept.e2d.dto.BackDto;
+import pl.codeconcept.e2d.dto.Response;
 import pl.codeconcept.e2d.dto.UserDto;
 import pl.codeconcept.e2d.service.jwt.JwtToken;
 import pl.codeconcept.e2d.service.mapper.LoginMapper;
 import pl.codeconcept.e2d.service.mapper.RegistrationMapper;
+
+import java.util.HashSet;
 
 
 @Service
@@ -45,16 +48,16 @@ public class UserService {
     }
 
     @Transactional
-    public String loginUser(LoginDto loginDto) {
+    public ResponseEntity<Response> loginUser(LoginDto loginDto) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
             UserRegistration userRegistration = (UserRegistration) authentication.getPrincipal();
             loginRepo.save(LoginMapper.mapToEntity(loginDto, ActionType.SIGN_IN));
-            return jwtToken.generateJwtToken(userRegistration);
+            return new ResponseEntity <> (Response.builder().message("Successful").token(jwtToken.generateJwtToken(userRegistration)).build(),HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Authentication problem");
-            return "Authentication problem";
+            return new ResponseEntity<>(Response.builder().message("Access Denied").token(null).build(), HttpStatus.BAD_REQUEST);
         }
     }
 }

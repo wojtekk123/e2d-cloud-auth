@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.codeconcept.e2d.dto.LoginDto;
 import pl.codeconcept.e2d.dto.BackDto;
+import pl.codeconcept.e2d.dto.Response;
 import pl.codeconcept.e2d.dto.UserDto;
 import pl.codeconcept.e2d.service.user.UserService;
 
@@ -21,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<String> signIn(@RequestBody LoginDto loginDto) {
-        return new ResponseEntity<>(userService.loginUser(loginDto), HttpStatus.OK);
+    public ResponseEntity<Response> signIn(@RequestBody LoginDto loginDto) {
+        return userService.loginUser(loginDto);
     }
 }
